@@ -1,2 +1,5 @@
 .venv
 .S_Data
+Tweets_Mg.csv
+models/lstm.keras
+models/tweets_lstm.keras
