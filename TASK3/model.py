@@ -19,12 +19,12 @@ train_data["score_label"] = train_data["score"].cat.codes
 train_features, train_labels = train_data['text'], tf.one_hot(
     train_data["score_label"], 5)
 d = dict(enumerate(train_data["score"].cat.categories))
-print(d)
+print(train_labels)
 
 
 vocab_size = 15000
 vector_size = 100
-max_seq_len = 20
+max_seq_len = 32
 tokenizer = Tokenizer(oov_token="<OOV>", num_words=vocab_size)
 tokenizer.fit_on_texts(train_data['text'])
 sequences_train = tokenizer.texts_to_sequences(train_data['text'])
@@ -54,7 +54,7 @@ callbacks = [
                                   verbose=1,
                                   mode="min",
                                   restore_best_weights=True),
-    keras.callbacks.ModelCheckpoint(filepath='models/lstm.keras',
+    keras.callbacks.ModelCheckpoint(filepath='models/lstm1.keras',
                                     verbose=1,
                                     save_best_only=True)
 ]

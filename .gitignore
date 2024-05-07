@@ -3,3 +3,6 @@
 Tweets_Mg.csv
 models/lstm.keras
 models/tweets_lstm.keras
+.DS_Store
+TASK3/models/tweets_lstm1.keras
+TASK3/models/lstm1.keras

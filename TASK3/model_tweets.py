@@ -7,6 +7,8 @@ import tensorflow.keras as keras
 import tensorflow as tf
 import pandas as pd
 import re
+
+# https://www.kaggle.com/datasets/leandrodoze/tweets-from-mgbr
 data_path = '/Users/sviat/SMART/SMART/Tweets_Mg.csv'
 
 train_data = pd.read_csv(data_path)
@@ -18,11 +20,11 @@ train_data = train_data.rename(
 
 
 for i in range(len(train_data)):
-    train_data.iloc[i]['text'] = train_data.iloc[i]['text'].lower()
+    train_data.loc[i, 'text'] = train_data.loc[i, 'text'].lower()
 
 for i in range(len(train_data)):
-    train_data.iloc[i]['text'] = re.sub(
-        pattern=r'[\w]*[^\w\s][\w]*', repl=' ', string=train_data.iloc[i]['text'])
+    train_data.loc[i, 'text'] = re.sub(
+        pattern=r'[\w]*[^\w\s][\w]*', repl=' ', string=train_data.loc[i, 'text'])
 # Train Data Labels
 train_data["score"] = train_data["score"].astype('category')
 train_data["score_label"] = train_data["score"].cat.codes
@@ -34,7 +36,7 @@ print(d)
 
 vocab_size = 15000
 vector_size = 300
-max_seq_len = 20
+max_seq_len = 32
 tokenizer = Tokenizer(oov_token="<OOV>", num_words=vocab_size)
 tokenizer.fit_on_texts(train_data['text'])
 sequences_train = tokenizer.texts_to_sequences(train_data['text'])
@@ -64,7 +66,7 @@ callbacks = [
                                   verbose=1,
                                   mode="min",
                                   restore_best_weights=True),
-    keras.callbacks.ModelCheckpoint(filepath='models/tweets_lstm.keras',
+    keras.callbacks.ModelCheckpoint(filepath='models/tweets_lstm1.keras',
                                     verbose=1,
                                     save_best_only=True)
 ]
